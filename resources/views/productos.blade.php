@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Productos</title>
@@ -41,6 +42,7 @@
     </ul>
 </select>
 
+
 <div class="row">
     @foreach($libros as $libro)
         <div class="col-md-4 mb-4">
@@ -51,6 +53,9 @@
                     <p class="card-text">{{ $libro->descripcion }}</p>
                     <p class="text-success fw-bold">${{ $libro->precio }} MXN</p>
                     <a href="#" class="btn btn-primary">Comprar</a>
+                    <h3>{{ $libro->nombre }}</h3>
+        <p>${{ $libro->precio }}</p>
+        <a href="{{ route('carrito.agregar', $libro->id) }}">Agregar al carrito</a>
                 </div>
             </div>
         </div>

@@ -2,5 +2,35 @@
     border-radius: 20px;
     border: 2px solid #034281;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    
+    background-color: rgba(255, 255, 255, 0.3); /* blanco con transparencia */
+    backdrop-filter: blur(10px); /* efecto de desenfoque detrás */
+    border-right: 1px solid rgba(255, 255, 255, 0.2); /* borde sutil */
+
 }
+.navbar-rounded {
+  border-radius: 15px;
+}
+.navbar {
+    border-radius: 15px;
+    border: 2px solid #034281;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    background-color: rgba(255, 255, 255, 0.3); /* blanco con transparencia */
+    backdrop-filter: blur(10px); /* efecto de desenfoque detrás */
+    border-right: 1px solid rgba(255, 255, 255, 0.2); /* borde sutil */
+}
+
+ .logo {
+    background-color: transparent; /* elimina fondo */
+    opacity: 10; /* un poco translúcido */
+}
+
+
+
+.carrito-img {
+    transition: 0.3s ease-in-out;
+}
+
+.carrito-img:hover {
+    content: url('/logos/carrito2.png');
+}
+
