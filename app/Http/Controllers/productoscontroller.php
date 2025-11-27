@@ -10,8 +10,12 @@ class productoscontroller extends Controller
     //
     public function productos()
     {
-// Obtener todos los libros desde la base de datos
+// Obtener todos los libros desde la base de datos 
         $libros = libros::all();
         return view('productos', compact('libros'));
     }
+
+
+
+    
 }

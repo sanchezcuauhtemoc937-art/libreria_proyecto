@@ -3,70 +3,67 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Charge;
-use Stripe\Checkout\Session;
-use Illuminate\Support\Facades\Session as LaravelSession;
+use Illuminate\Support\Facades\Session;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
-use Exception;
+
 
 
 class CheckoutController extends Controller
 {
     //
-    public function show()
-    {
-        $carrito = LaravelSession::get('carrito', []);
-        return view('checkout', compact('carrito'));
-    }
-
-    public function process()
-    {
-        Stripe::setApiKey(config('services.stripe.secret'));
-
-        $carrito = LaravelSession::get('carrito', []);
-        $lineItems = [];
-
-        foreach ($carrito as $item) {
-            $lineItems[] = [
-                'price_data' => [
-                    'currency' => 'mxn',
-                    'product_data' => [
-                        'name' => $item['nombre'],
-                    ],
-                    'unit_amount' => $item['precio'] * 100, // en centavos
-                ],
-                'quantity' => $item['cantidad'],
-            ];
+   // Verificar login
+    public function ver(){
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors('Debes iniciar sesión para pagar.');
         }
-        
+        return view('checkout');
     }
+
+
+
+      public function process(Request $request)
+    {
+        // Verificar login
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors('Debes iniciar sesión para pagar.');
+        }
+
+        // Validar datos en que parte apunta ala base de datos
+
+        $request->validate([
+            'stripeToken' => 'required',
+            'name' => 'required|string|max:255',
+        ]);
+
+        try {
+            Stripe::setApiKey(config('services.stripe.secret'));
+
+            $charge = Charge::create([
+                'amount' =>  1000, // en centavos (10.00 USD)
+                'currency' => 'usd',
+                'source' => $request->stripeToken,
+                'description' => 'Pago de prueba',
+                'metadata' => [
+                    'user_id' => Auth::id(),
+                    'user_name' => Auth::user()->name,
+                ],
+            ]);
+
+            return redirect()->route('checkout.process')->with('process', 'Pago exitoso ');
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
+
+    }
+
 
     public function success()
     {
-        // Vaciar carrito
-        LaravelSession::forget('carrito');
-        return view('checkout_success');
+        return view('checkout');
     }
 
-    public function cancel()
-    {
-        return view('checkout_cancel');
-    }
-
-
-    
 
 }

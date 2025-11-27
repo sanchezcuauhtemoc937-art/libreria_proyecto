@@ -1,5 +1,5 @@
 .offcanvas {
-    border-radius: 20px;
+    border-radius: 15px;
     border: 2px solid #034281;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     background-color: rgba(255, 255, 255, 0.3); /* blanco con transparencia */
@@ -7,16 +7,14 @@
     border-right: 1px solid rgba(255, 255, 255, 0.2); /* borde sutil */
 
 }
-.navbar-rounded {
-  border-radius: 15px;
-}
+
 .navbar {
     border-radius: 15px;
     border: 2px solid #034281;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     background-color: rgba(255, 255, 255, 0.3); /* blanco con transparencia */
     backdrop-filter: blur(10px); /* efecto de desenfoque detrás */
-    border-right: 1px solid rgba(255, 255, 255, 0.2); /* borde sutil */
+    border-right: 0px solid rgba(255, 255, 255, 0.2); /* borde sutil */
 }
 
  .logo {
@@ -32,5 +30,17 @@
 
 .carrito-img:hover {
     content: url('/logos/carrito2.png');
+}
+
+.video-navbar {
+     border-radius: 15px;
+  position: absolute;   /* se coloca encima */
+  top: 1px;
+  left: 0;
+  width: 100%;          /* ocupa todo el ancho */
+  height: auto;         /* que se ajuste a proporción */
+  min-height: 100px;    /* altura mínima */
+  object-fit: cover;    /* rellena todo el ancho */
+  z-index: -1;          /* detrás del contenido */
 }
 

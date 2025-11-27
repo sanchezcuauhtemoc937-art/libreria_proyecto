@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
- 
     <head>
     <meta charset="UTF-8">
     <title>Librería</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ asset('css/offcanvas.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+     <style>
+  </style>
 </head>
-
-
- 
 
 
 <body class="p-3 mb-2 bg-black text-white">
@@ -23,6 +21,15 @@
 
       <img src="{{ asset('logos/Logo_libreria.png') }}" alt="Logo" width="300" class="logo" class="d-inline-block align-text-top">
     </a>
+
+      <!-- Video en medio -->
+    <div class="video-container mx-auto">
+        <video autoplay loop muted playsinline class="video-navbar">
+            <source src="{{ asset('logos/logo_animado.mp4') }}" type="video/mp4">
+        </video>
+    </div>
+
+
 
     <!-- Botón hamburguesa para móviles -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
@@ -53,6 +60,9 @@
     <a href="{{ route('login') }}" class="btn btn-outline-light mb-2">
         Iniciar Sesión / Registrarse
     </a>
+    <a href="{{ route('clientes') }}" class="btn btn-outline-light mb-2">
+       cliente
+    </a>
 
     <!-- Texto de bienvenida debajo -->
     @if(Auth::check())
@@ -68,10 +78,11 @@
 </nav>
 
 
-            <h1 class="text-primary">Bienvenido a la Librería For Everyone</h1>
+            
          
-            <nav class="navbar bg-body-tertiary">
+  <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
+    <h1 class="text-primary">Librería For Everyone</h1>
     <a class="navbar-brand">Buscar Libro</a>
     <form class="d-flex" role="search">
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
@@ -95,15 +106,7 @@
     </div>
   </div>
 </nav>
-
-            <p class="lead">"Los libros no llenan estantes, llenan mentes."</p>
-            <a  href="{{ route('productos') }}" class="btn btn-success">Ver catálogo</a>
-        </div>
-    </div>
-
-   @if(isset($categoria))
-    <h4 class="mt-3">Libros de la categoría: {{ ucfirst($categoria) }}</h4>
-@endif
+</div>
 
   <ul class="topnav"  aria-labelledby="dropdownMenuButtonDark">
    <div class="dropdown" data-bs-theme="dark">
@@ -132,56 +135,87 @@
   </ul>
 
 </div>
-            </ul>
-        </div>
         <div id="main">
-            <div id="section">
-         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Libros agregados recientemente</a>        
+  <div id="section">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid d-flex align-items-center">
+
+        <!-- Izquierda -->
+        <div class="me-auto">
+          <p class="lead mb-0">"Los libros no llenan estantes, llenan mentes."</p>
         </div>
+
+        <!-- Centro -->
+        <div class="mx-auto text-center">
+          @if(isset($categoria))
+            <h4 class="mt-3">Libros de la categoría: {{ ucfirst($categoria) }}</h4>
+          @else
+            <a class="navbar-brand" href="/">Libros agregados recientemente</a>
+          @endif
+        </div>
+
+        <!-- Derecha -->
+        <div class="ms-auto">
+          <a href="{{ route('productos') }}" class="btn btn-success">
+            Ver catálogo
+          </a>
+        </div>
+      </div>
     </nav>
+  </div>
+</div>
+    </nav>
+
+
+
+
+<div class="container mt-5">
+  <div class="row">
+    @foreach($librosRecientes as $libro)
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <img src="{{ asset('imagenes/libro15.jpeg') }}" class="card-img-top" alt="Libro">
+          <div class="card-body">
+            <!-- Botón que abre el offcanvas y pasa datos -->          
+              <a href="#" 
+                 data-bs-toggle="offcanvas" 
+                 data-bs-target="#offcanvasLibro"                
+                 data-titulo="{{ $libro->titulo }}"
+                 data-descripcion="{{ $libro->descripcion }}"
+                 data-precio="{{ $libro->precio }}">
+                 {{ $libro->titulo }}
+              </a>
+          </div>
+        </div>
+      </div>
+    @endforeach
+  </div>
+</div>
 
 
 <div class="container mt-5" >
 <div class="offcanvas offcanvas-end"  tabindex="-1" id="offcanvasPrincipito"
      aria-labelledby="offcanvasPrincipitoLabel" data-bs-scroll="true">
-    <div class="offcanvas-header"
-    >
-     
+    <div class="offcanvas-header">
+    
         <h5 class="offcanvas-title" id="offcanvasPrincipitoLabel">El Principito</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
     </div>
     <div class="offcanvas-body" class="border border-primary">
+        <div class="video-container mx-auto">
+        <video autoplay loop muted playsinline class="video-navbar">
+            <source src="{{ asset('logos/logo_navbar.mp4') }}" type="video/mp4">
+        </video>   
         <p>
             “El Principito” es una obra poética y filosófica que relata las aventuras
             de un pequeño príncipe que viaja de planeta en planeta. En cada encuentro,
             descubre algo sobre la naturaleza humana: el amor, la amistad, la soledad y
             la búsqueda de sentido en la vida.
         </p>
+        </div>
     </div>
 </div>
 </div>
-
-<div class="row">
-    @foreach($librosRecientes as $libro)
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                 <img src="{{ asset('imagenes/libro15.jpeg') }}" class="card-img-top" alt="Libro 1">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $libro->titulo }}</h5>
-                    <p class="card-text">{{ $libro->descripcion }}</p>
-                    <p class="text-success fw-bold">${{ $libro->precio }} MXN</p>
-                    <a href="#" class="btn btn-primary">Comprar</a>
-                </div>
-            </div>
-        </div>
-    @endforeach
-   </div>
-    
-  </div>
-
-
         <h1 class="text-center mb-4">Libros Mas Vendidos</h1>
         <div class="row">
             <!-- Producto 1 -->

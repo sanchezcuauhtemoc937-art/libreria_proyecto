@@ -32,6 +32,4 @@ class LibroRecienteController extends Controller
 
     return view('index', compact('librosRecientes', 'categoria'));
 }
-
-
 }

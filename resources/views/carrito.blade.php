@@ -8,8 +8,8 @@
 </head>
 <body class="p-3 mb-2 bg-black text-white">
     <div class="container">
-        <h2 class="mb-4">Tu carrito</h2>
-
+       <a class="nav-link text-white" href="/productos"> <H2>Cataloco</H2> </a>
+   
         <div class="row">
             @foreach($carrito as $id => $item)
                 <div class="col-md-6 mb-3">
@@ -27,9 +27,7 @@
                                     <h5 class="card-title">{{ $item['nombre'] }}</h5>
                                     <p class="card-text">
                                         Precio: ${{ $item['precio'] }} <br>
-                                        Cantidad: {{ $item['cantidad'] }}
-                                         
-                                        
+                                        Cantidad: {{ $item['cantidad'] }}                                        
                                     </p>
                                     <a href="{{ route('carrito.eliminar', $id) }}" 
                                        class="btn btn-sm btn-danger">
@@ -47,9 +45,9 @@
 
         <!-- Botón de checkout -->
         <div class="mt-4">
-            <a href="{{ route('checkout.show') }}" class="btn btn-success btn-lg">
-                Ir a pagar
-            </a>
+           <a href="{{ route('checkout') }}" class="btn btn-success btn-lg">
+    Ir a pagar
+</a>
         </div>
     </div>
 </body>

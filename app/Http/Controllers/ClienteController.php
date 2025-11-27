@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class ClienteController extends Controller
 {
 
-    //
+    //get all clients
         public function create()
     {
         return view('clientes');

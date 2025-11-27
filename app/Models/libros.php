@@ -22,6 +22,12 @@ class libros extends Model
         'categoria',
     ];
 
+    public function producto()
+{
+    return $this->morphOne(Producto::class, 'producto');
+}
+
+
     
 
 }

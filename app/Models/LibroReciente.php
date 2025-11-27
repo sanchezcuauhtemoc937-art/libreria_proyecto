@@ -24,4 +24,9 @@ class LibroReciente extends Model
         'categoria',
     ];
 
+    public function producto()
+{
+    return $this->morphOne(Producto::class, 'producto');
+}
+
 }

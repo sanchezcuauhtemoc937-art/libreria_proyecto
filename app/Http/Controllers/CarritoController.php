@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class CarritoController extends Controller
 {
-    //
+    // Agregar producto al carrito
     public function agregar($id)
 {
     $producto = libros::findOrFail($id);
@@ -26,7 +26,7 @@ class CarritoController extends Controller
         'cantidad' => isset($carrito[$id]) ? $carrito[$id]['cantidad'] + 1 : 1,
     ];
     Session::put('carrito', $carrito);
-    return redirect()->route('carrito.ver');
+    return redirect()->route('carrito.ver', $id);
 }
 
 public function ver()
@@ -34,16 +34,7 @@ public function ver()
     $carrito = Session::get('carrito', []);
     return view('carrito', compact('carrito'));
 }
-public function total(){
-$total = 0;
-foreach ($carrito as $item) {
-    $total += $item['precio'] * $item['cantidad'];
-}
 
-return view('carrito', compact('carrito', 'total'));
-
-
-}
 
 public function eliminar($id)
 {
@@ -52,6 +43,7 @@ public function eliminar($id)
         unset($carrito[$id]);
         Session::put('carrito', $carrito);
     }
-    return redirect()->route('carrito.ver');
+    return redirect()->route('carrito.ver', $id);
+    
 }
 }
