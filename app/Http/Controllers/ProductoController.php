@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Producto;
+use App\Models\libros;
+use App\Models\LibroReciente;
 
 class ProductoController extends Controller
 {
@@ -12,7 +15,7 @@ class ProductoController extends Controller
     public function index()
     {
         //
-           return Producto::with('producto')->get();
+           return Producto::with('productos')->get();
     }
 
     /**

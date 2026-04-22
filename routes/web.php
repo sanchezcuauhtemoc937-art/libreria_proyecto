@@ -8,6 +8,8 @@ use App\Models\Cliente;
 use App\Http\Controllers\LibroController;
 use App\Http\Controllers\ProductoController;
 use App\Models\LibroReciente;
+use App\Models\LibroPopular;
+use App\Http\Controllers\LibroPopularController;
 use App\Http\Controllers\LibroRecienteController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CheckoutController;
@@ -20,8 +22,12 @@ use Stripe\Charge;
 ///axeder a su clase y su metodo y controlador    este es un medodo inndex
 
 Auth::routes();
-Route::get('/', [LibroRecienteController::class, 'index'])->name('librosRecientes'); 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [LibroRecienteController::class, 'index'])->name('librosRecientes');
+
+// Página de libros populares
+Route::get('/libros-populares', [LibroPopularController::class, 'index'])->name('librosPopulares');
+
 Route::get('/productos', [productoscontroller::class, 'productos'])->name('productos');
 
 

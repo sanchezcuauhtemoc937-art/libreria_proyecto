@@ -13,14 +13,14 @@
 
 <body class="p-3 mb-2 bg-black text-white">
     <div id="container">
-        <div id="header">         
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
+      <div id="header">         
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+         <div class="container-fluid">
     <!-- Logo a la izquierda -->
-    <a class="navbar-brand"  href="#">
+           <a class="navbar-brand"  href="#">
 
-      <img src="{{ asset('logos/Logo_libreria.png') }}" alt="Logo" width="300" class="logo" class="d-inline-block align-text-top">
-    </a>
+          <img src="{{ asset('logos/Logo_libreria.png') }}" alt="Logo" width="300" class="logo" class="d-inline-block align-text-top">
+           </a>
 
       <!-- Video en medio -->
     <div class="video-container mx-auto">
@@ -70,13 +70,13 @@
     @else
         <small class="text-white">Bienvenido, visitante</small>
     @endif
-</div>
+        </div>
 
       </div>
     </div>
   </div>
 </nav>
-
+</div>
 
             
          
@@ -91,20 +91,32 @@
   </div>
 </nav>
 <nav class="navbar navbar-expand-lg bg-body-tertiary"  class="navbar navbar-expand-lg bg-body-tertiary rounded">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Inicio</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page"  href="{{ route('productos') }}">Catalogo</a>
-        <a class="nav-link" href="#">Conocenos</a>
-        <a class="nav-link" href="#">Ubicacion</a>
-      
-      </div>
-    </div>
-  </div>
+  
+    <div class="d-flex">
+  <ul class="nav nav-pills mx-auto bg-dark rounded-5 shadow-sm">
+    <!-- items -->
+      <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-dark rounded-5 shadow-sm"
+    id="pillNav2" role="tablist"
+    style="--bs-nav-link-color: var(--bs-white); 
+           --bs-nav-pills-link-active-color: var(--bs-dark); 
+           --bs-nav-pills-link-active-bg: var(--bs-white);">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Inicio</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link rounded-5" id="catalogo-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Catálogo</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link rounded-5" id="conocenos-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Conócenos</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link rounded-5" id="ubicacion-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Ubicación</button>
+  </li>
+</ul>
+  </ul>
+</div>
+
+
 </nav>
 </div>
 
@@ -130,14 +142,15 @@
 
 <a class="dropdown-item" href="{{ route('librosRecientes', ['categoria' => 'thriller']) }}">thriller/terror</a>
 <a class="dropdown-item" href="{{ route('librosRecientes', ['categoria' => 'historia']) }}">historia</a>
-
-
-  </ul>
-
+    </ul>
+   </ul>
 </div>
-        <div id="main">
+
+
+<div id="main">
   <div id="section">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
       <div class="container-fluid d-flex align-items-center">
 
         <!-- Izquierda -->
@@ -147,11 +160,9 @@
 
         <!-- Centro -->
         <div class="mx-auto text-center">
-          @if(isset($categoria))
-            <h4 class="mt-3">Libros de la categoría: {{ ucfirst($categoria) }}</h4>
-          @else
-            <a class="navbar-brand" href="/">Libros agregados recientemente</a>
-          @endif
+         
+            <a class="navbar-brand" href="/">Libros mas vendidos</a>
+       
         </div>
 
         <!-- Derecha -->
@@ -161,163 +172,84 @@
           </a>
         </div>
       </div>
-    </nav>
+         </nav>
+         </div>
+        </div>
+       </div> 
+</div>
+
+
+<div class="container mt-5">
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasLibro"
+       aria-labelledby="offcanvasLibroLabel" data-bs-scroll="true">
+    <div class="offcanvas-header">
+       <video autoplay loop muted playsinline class="video-navbar">
+            <source src="{{ asset('logos/logo_navbar.mp4') }}" type="video/mp4">
+        </video>   
+      <h5 class="offcanvas-title" id="offcanvasLibroLabel">Título del libro</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body border border-primary">
+      <p id="descripcionLibro"></p>
+      <p id="precioLibro" class="text-success fw-bold"></p>
+    </div>
   </div>
 </div>
-    </nav>
-
-
-
-
+@isset($librosRecientes)
 <div class="container mt-5">
   <div class="row">
     @foreach($librosRecientes as $libro)
       <div class="col-md-4 mb-4">
         <div class="card h-100">
-          <img src="{{ asset('imagenes/libro15.jpeg') }}" class="card-img-top" alt="Libro">
+          <!-- Imagen activadora -->
+          <img src="{{ asset('imagenes/libro15.jpeg') }}" 
+               class="card-img-top libro-img" 
+               alt="{{ $libro->titulo }}"
+               data-bs-toggle="offcanvas" 
+               data-bs-target="#offcanvasLibro"
+               data-titulo="{{ $libro->titulo }}"
+               data-descripcion="{{ $libro->descripcion }}"
+               data-precio="{{ $libro->precio }}">
           <div class="card-body">
-            <!-- Botón que abre el offcanvas y pasa datos -->          
-              <a href="#" 
-                 data-bs-toggle="offcanvas" 
-                 data-bs-target="#offcanvasLibro"                
-                 data-titulo="{{ $libro->titulo }}"
-                 data-descripcion="{{ $libro->descripcion }}"
-                 data-precio="{{ $libro->precio }}">
-                 {{ $libro->titulo }}
-              </a>
+            <!-- También puedes hacer el título activador -->
+            <h5 class="card-title text-dark fw-bold"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasLibro"
+                data-titulo="{{ $libro->titulo }}"
+                data-descripcion="{{ $libro->descripcion }}"
+                data-precio="{{ $libro->precio }}">
+              {{ $libro->titulo }}
+            </h5>
+            <p class="card-text">{{ $libro->descripcion }}</p>
+            <p class="text-success fw-bold">${{ $libro->precio }} MXN</p>
+            <a href="#" class="btn btn-primary">Comprar</a>
           </div>
         </div>
       </div>
     @endforeach
   </div>
 </div>
+@endisset
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var offcanvasEl = document.getElementById('offcanvasLibro');
+  offcanvasEl.addEventListener('show.bs.offcanvas', function (event) {
+    var trigger = event.relatedTarget;
+    var titulo = trigger.getAttribute('data-titulo');
+    var descripcion = trigger.getAttribute('data-descripcion');
+    var precio = trigger.getAttribute('data-precio');
+
+    document.getElementById('offcanvasLibroLabel').textContent = titulo;
+    document.getElementById('descripcionLibro').textContent = descripcion;
+    document.getElementById('precioLibro').textContent = "$" + precio + " MXN";
+  });
+});
+</script>
 
 
-<div class="container mt-5" >
-<div class="offcanvas offcanvas-end"  tabindex="-1" id="offcanvasPrincipito"
-     aria-labelledby="offcanvasPrincipitoLabel" data-bs-scroll="true">
-    <div class="offcanvas-header">
-    
-        <h5 class="offcanvas-title" id="offcanvasPrincipitoLabel">El Principito</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
-    </div>
-    <div class="offcanvas-body" class="border border-primary">
-        <div class="video-container mx-auto">
-        <video autoplay loop muted playsinline class="video-navbar">
-            <source src="{{ asset('logos/logo_navbar.mp4') }}" type="video/mp4">
-        </video>   
-        <p>
-            “El Principito” es una obra poética y filosófica que relata las aventuras
-            de un pequeño príncipe que viaja de planeta en planeta. En cada encuentro,
-            descubre algo sobre la naturaleza humana: el amor, la amistad, la soledad y
-            la búsqueda de sentido en la vida.
-        </p>
-        </div>
-    </div>
-</div>
-</div>
-        <h1 class="text-center mb-4">Libros Mas Vendidos</h1>
-        <div class="row">
-            <!-- Producto 1 -->
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{ asset('imagenes/libro1.jpeg') }}" class="card-img-top" alt="Libro 1">
-                    <div class="card-body">
-                       <!-- Título clicable que abre el offcanvas -->
-                <h5 class="card-title">
-                    <a href="#" 
-                  
-                       data-bs-toggle="offcanvas" 
-                       data-bs-target="#offcanvasPrincipito" 
-                       aria-controls="offcanvasPrincipito"
-                       class="text-decoration-none text-dark fw-bold">
-                       El Principito
-                    </a>
-                </h5>
-                        <p class="card-text">Un clásico de la literatura para todas las edades.</p>
-                        <p class="text-success fw-bold">$150 MXN</p>
-                        <a href="#" class="btn btn-primary">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Producto 2 -->
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{ asset('imagenes/libro2.jpeg') }}" class="card-img-top" alt="Libro 2">
-                    <div class="card-body">
-                         <h5 class="card-title">
-                    <a href="#" 
-                       data-bs-toggle="offcanvas" 
-                       data-bs-target="#offcanvasPrincipito" 
-                       aria-controls="offcanvasPrincipito"
-                       class="text-decoration-none text-dark fw-bold">
-                        Cien Años de Soledad
-                    </a>
-                </h5>
-                        <p class="card-text">La obra maestra de Gabriel García Márquez.</p>
-                        <p class="text-success fw-bold">$220 MXN</p>
-                        <a href="#" class="btn btn-primary">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Producto 3 -->
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{ asset('imagenes/libro3.jpeg') }}" class="card-img-top" alt="Libro 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Don Quijote de la Mancha</h5>
-                        <p class="card-text">La novela más influyente en lengua española.</p>
-                        <p class="text-success fw-bold">$180 MXN</p>
-                        <a href="#" class="btn btn-primary">Comprar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>        
-  </div> 
 
-   <div class="row">
-            <!-- Producto 1 -->
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{ asset('imagenes/libro4.jpeg') }}" class="card-img-top" alt="Libro 1">
-                    <div class="card-body">
-                        <h5 class="card-title">El Principito</h5>
-                        <p class="card-text">Un clásico de la literatura para todas las edades.</p>
-                        <p class="text-success fw-bold">$150 MXN</p>
-                        <a href="#" class="btn btn-primary">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Producto 2 -->
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{ asset('imagenes/libro5.jpeg') }}" class="card-img-top" alt="Libro 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Cien Años de Soledad</h5>
-                        <p class="card-text">La obra maestra de Gabriel García Márquez.</p>
-                        <p class="text-success fw-bold">$220 MXN</p>
-                        <a href="#" class="btn btn-primary">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Producto 3 -->
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{ asset('imagenes/libro6.jpeg') }}" class="card-img-top" alt="Libro 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Don Quijote de la Mancha</h5>
-                        <p class="card-text">La novela más influyente en lengua española.</p>
-                        <p class="text-success fw-bold">$180 MXN</p>
-                        <a href="#" class="btn btn-primary">Comprar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>        
-  </div> 
-
-
+ <div class="container mt-5">
     <h1 class="text-center mb-4">Resellas</h1>
 <div class="contenedor-fluido">
  <div id="carouselExampleCaptions" class="carousel slide">
@@ -357,6 +289,7 @@
   </button>
 </div>
 </div>
+</div>
 
 
 <div class="contenedor-fluido">
@@ -372,8 +305,6 @@
    </div>
     </footer>
        </div>
-
-  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
  </body>
